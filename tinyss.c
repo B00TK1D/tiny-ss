@@ -1,4 +1,9 @@
-// Attempt to open a socket listening on all TCP ports from 1 to 65535.  Print out any ports that fail to bind.
+/*
+    Tiny SS
+    Author: B00TK1D
+    Attempt to open a socket listening on all TCP ports from 1 to 65535 (or provided max_port).
+    Print out any ports that fail to bind (meaning they are currently in use)
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
