@@ -1,4 +1,4 @@
-# tiny-ss
+# Tiny SS
 Tiny SS - list what ports are in use, with just a bit of C
 
 ## Build
