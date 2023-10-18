@@ -16,5 +16,7 @@ Add `-j` to output in JSON format.
 ## Example
 ```bash
 demohost$ ./tinyss 10000
-21,80,53,1337
+21,80,53,1337;53
 ```
+
+Default output format is `tcp_port,tcp_port,tcp_port;udp_port,udp_port`
