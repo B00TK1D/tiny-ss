@@ -12,20 +12,13 @@
 
 #define MAX_PORT 65535
 
-int main(int argc, char **argv) {
+void scan(int sock_type, int max_port) {
     int sock;
-    struct sockaddr_in addr;
-    int port;
     int ret;
-
-    int max_port = MAX_PORT;
-
-    if (argc > 1) {
-        max_port = atoi(argv[argc - 1]);
-    }
-
-    for (port = 1; port <= max_port; port++) {
-        sock = socket(AF_INET, SOCK_STREAM, 0);
+    struct sockaddr_in addr;
+    char first = 1;
+    for (int port = 1; port <= max_port; port++) {
+        sock = socket(AF_INET, sock_type, 0);
         if (sock < 0) {
             exit(1);
         }
@@ -36,11 +29,41 @@ int main(int argc, char **argv) {
 
         ret = bind(sock, (struct sockaddr *)&addr, sizeof(addr));
         if (ret < 0) {
-            printf("%d,", port);
+            if (first) {
+                first = 0;
+            } else {
+                printf(",");
+            }
+            printf("%d", port);
         }
 
         close(sock);
     }
+}
+
+int main(int argc, char **argv) {
+    int sock;
+    int ret;
+
+    int max_port = MAX_PORT;
+
+    if (argc > 1 && atoi(argv[argc - 1]) > 0 && atoi(argv[argc - 1]) <= MAX_PORT) {
+        max_port = atoi(argv[argc - 1]);
+    }
+
+    if (argc > 1 && argv[1][0] == '-' && argv[1][1] == 'j') {
+        printf("{tcp:[");
+        scan(SOCK_STREAM, max_port);
+        printf("],udp:[");
+        scan(SOCK_DGRAM, max_port);
+        printf("]}");
+    } else {
+        scan(SOCK_STREAM, max_port);
+        printf(";");
+        scan(SOCK_DGRAM, max_port);
+    }
+
+    
 
     return 0;
 }

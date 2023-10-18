@@ -8,8 +8,10 @@ gcc tinyss.c -o tinyss
 
 ## Usage
 ```bash
-./tinyss [max_port]
+./tinyss [-j] [max_port]
 ```
+
+Add `-j` to output in JSON format.
 
 ## Example
 ```bash
